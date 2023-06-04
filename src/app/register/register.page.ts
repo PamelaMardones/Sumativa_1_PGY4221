@@ -1,77 +1,58 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-
+import { Component } from '@angular/core';
+import { AuthService } from '../auth.service';
+import { User } from '../models/user.model';
+import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.page.html',
   styleUrls: ['./register.page.scss'],
 })
-export class RegisterPage implements OnInit{
-    usuario: String | undefined;
-    niveles:any[]=[
-      {id:1,nivel:"Basica Incompleta"},
-      {id:2,nivel:"Basica Completa"},
-      {id:3,nivel:"Media Incompleta"},
-      {id:4,nivel:"Media Completa"},
-      {id:5,nivel:"Media Incompleta"},
-      {id:6,nivel:"Superior Completa"}
-    ]
-    data:any={
-      nombre:"",
-      apellido:"",
-      educacion:"",
-      nacimiento:"",
-      email:"",
-      password:""
-    };
-    field:string="";
-    constructor(public toastController: ToastController) {}
-    ngOnInit() {}
+export class RegisterPage {
+  user: User = {
+    email: '',
+    password: ''
+  };
+  errorMessage: string = '';
 
-    validateModel(model:any){
-      for (var [key, value] of Object.entries(model)) {
-        if (value=="") {
-          this.field=key;
-          return false;
-        }
-      }
-      return true;
+  constructor(
+    private authService: AuthService,
+    private alertController: AlertController,
+    private router: Router
+  ) { }
+
+  register() {
+    if (!this.validateEmail(this.user.email)) {
+      this.presentAlert('Correo electrónico inválido', 'Por favor ingresa un correo electrónico válido.');
+      return;
     }
 
-    limpiar(){
-      for (var [key, value] of Object.entries(this.data)) {
-        Object.defineProperty(this.data,key,{value:""})
-      }
-    }
-    registrar(){
-      if(this.validateModel(this.data)){
-        this.presentToast("Cuenta creada exitosamente, su usuario es: "+this.data.nombre+" "+this.data.apellido);
-      }
-      else{
-        this.presentToast("Falta: "+this.field);
-      }
-    } 
-/**
-   * Muestra un toast al usuario
-   * @param message Mensaje a presentar al usuario
-   * @param duration Duración el toast, este es opcional
-   */
-async presentToast(message:string, duration?:number){
-  const toast = await this.toastController.create(
-    {
-      message:message,
-      duration:duration?duration:3000
-    }
-  );
-  toast.present();
-    }
+    this.authService.register(this.user)
+      .then(() => {
+        // Registro exitoso
+        this.presentAlert('Registro exitoso', 'El usuario se ha creado correctamente.');
+        this.router.navigate(['/login']); // Redirigir a la página de inicio de sesión
+      })
+      .catch((error) => {
+        // Error en el registro
+        this.errorMessage = error;
+      });
+  }
+
+  validateEmail(email: string): boolean {
+    // Utiliza una expresión regular para validar el formato del correo electrónico
+    const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return pattern.test(email);
+  }
+
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
 }
-  
-
-    
-
-   
-
-
-

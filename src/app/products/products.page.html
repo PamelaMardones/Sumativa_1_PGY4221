@@ -1,29 +1,30 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="primary">
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title>Productos</ion-title>
+    <ion-title class="header-title">Productos</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class= "animated-content" class="ion-text-center">
+<ion-content class="animated-content ion-text-center">
   <ion-card-title class="ion-text-center">
     <ion-label>
-      <h1>Yu-Gi-Oh! TCG </h1>
+      <h1 class="page-title">Yu-Gi-Oh! TCG</h1>
     </ion-label>
   </ion-card-title>
-  <ion-card *ngFor="let product of products">
-    <img [src]="product.image">
+  
+  <ion-card class="product-card" *ngFor="let product of products">
+    <img [src]="product.imagen" class="product-image">
     <ion-card-content>
       <ion-card-header>
-        <ion-card-title>{{ product.title }}</ion-card-title>
+        <ion-card-title class="product-name">{{ product.nombre }}</ion-card-title>
       </ion-card-header>
-      {{ product.description }}
-      <p class="valor">Valor: ${{ product.price }}</p>
-      <ion-button class="compra" color="secondary" (click)="addToCart(product)">
+      <p class="product-description">{{ product.descripcion }}</p>
+      <p class="product-price">Valor: ${{ product.precio }}</p>
+      <ion-button class="add-to-cart-button" color="secondary" (click)="addToCart(product)">
         <ion-icon name="cart-outline"></ion-icon>
-        <p>Añadir al carrito</p>    
+        <p>Añadir al carrito</p>
       </ion-button>
     </ion-card-content>
   </ion-card>

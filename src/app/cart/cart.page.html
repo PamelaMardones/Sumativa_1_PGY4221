@@ -19,11 +19,11 @@
       <ion-list class="cart-list" *ngIf="cartItems.length > 0">
         <ion-item *ngFor="let item of cartItems" class="cart-item">
           <ion-thumbnail slot="start">
-            <img [src]="item.image" alt="Imagen del producto" class="cart-thumbnail">
+            <img [src]="item.imagen" alt="Imagen del producto" class="cart-thumbnail">
           </ion-thumbnail>
           <ion-label class="cart-label">
-            <h2 class="cart-title">{{ item.title }}</h2>
-            <p class="cart-price">Valor: {{ item.price }}</p>
+            <h2 class="cart-title">{{ item.nombre }}</h2>
+            <p class="cart-price">Valor: {{ item.precio }}</p>
           </ion-label>
           <ion-button class="cart-remove-button" (click)="removeFromCart(item)">
             <ion-icon name="trash-outline"></ion-icon>
@@ -31,6 +31,7 @@
           </ion-button>
         </ion-item>
       </ion-list>
+      <ion-button expand="full" (click)="irACompletarPedido()">Completar Pedido</ion-button>
     </div>
   </div>
 </ion-content>

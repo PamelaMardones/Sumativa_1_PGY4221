@@ -1,62 +1,63 @@
-import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
+import { AlertController } from '@ionic/angular';
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-  login:any={
-    Usuario: "",
-    Password:""
-  }
-  field:string="";
-  user1: string = "Pamela Mardones";
-  clave1: string = "1234";
+export class LoginPage {
+  loginUser = {
+    email: '',
+    password: ''
+  };
+  loginErrorMessage = '';
 
-  constructor(public toastController: ToastController, private router: Router) {}
-  ngOnInit() {}
+  constructor(
+    private authService: AuthService,
+    private alertController: AlertController,
+    private router: Router
+  ) {}
 
-  limpiar(){
-    for (var [key, value] of Object.entries(this.login)) {
-      Object.defineProperty(this.login,key,{value:""})
-    }
-  }
+  login() {
+    const { email, password } = this.loginUser;
 
-  ingresar(){
-    if(this.login.Usuario == this.user1 && this.login.Password == this.clave1 ){
-      this.presentToast("Bienvenido (a) "+ this.user1);
-    }
-    else{
-      this.presentToast("Usuario y/o contraseña incorrecta");
-    }
-  }
-  validateModel(model:any){
-    for (var [key, value] of Object.entries(model)) {
-      if (value=="") {
-        this.field=key;
-        return false;
-      }
-    }
-    return true;
-  }
- 
-    /**
-   * Muestra un toast al usuario
-   * @param message Mensaje a presentar al usuario
-   * @param duration Duración el toast, este es opcional
-   */
-  
-    async presentToast(message:string, duration?:number){
-      const toast = await this.toastController.create(
-        {
-          message:message,
-          duration:duration?duration:2000
+    this.authService.login(email, password)
+      .then(() => {
+        const loggedInUser = this.authService.getLoggedInUser();
+        if (loggedInUser) {
+          this.presentWelcomeAlert(loggedInUser.email);
         }
-      );
-      toast.present();
-    }
+      })
+      .catch(error => {
+        console.log('Error al iniciar sesión:', error);
+        this.presentLoginErrorAlert();
+      });
   }
 
+  goToRegisterPage() {
+    this.router.navigate(['/register']); // Redireccionar a la página de registro
+  }
 
+  async presentWelcomeAlert(username: string) {
+    const alert = await this.alertController.create({
+      header: '¡Bienvenido!',
+      message: `¡Hola, ${username}! Has iniciado sesión correctamente.`,
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+
+  async presentLoginErrorAlert() {
+    const alert = await this.alertController.create({
+      header: 'Error de inicio de sesión',
+      message: 'El email o la contraseña son incorrectos. Por favor, verifica tus credenciales.',
+      buttons: ['Aceptar']
+    });
+
+    await alert.present();
+  }
+}

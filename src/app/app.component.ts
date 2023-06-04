@@ -9,9 +9,8 @@ export class AppComponent {
     { title: 'Login', url: 'login', icon: 'log-in' },
     { title: 'Register', url: 'register', icon: 'book' },
     { title: 'Productos', url: 'products', icon: 'bag' },
-    { title: 'Mis Compras', url: 'my-shopping', icon: 'pricetags' },
     { title: 'Carrito', url: 'cart', icon: 'cart' },
-  ];
+    { title: 'Completar pedido', url: 'my-shopping', icon: 'pricetags' }
 
-  constructor() {}
+  ];
 }
