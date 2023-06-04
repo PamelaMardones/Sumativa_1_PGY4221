@@ -1,0 +1,64 @@
+.animated-content {
+    animation-name: slideIn;
+    animation-duration: 2s;
+    animation-fill-mode: forwards;
+  }
+  
+  @keyframes slideIn {
+    0% {
+      opacity: 0;
+      transform: translateY(50px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  #titulo{
+    text-align: center;
+    font-family: "Ephesis";
+    font-weight:bold;
+    font-size:35px;
+    margin:0;
+    padding:0;
+  }
+  
+  ion-card-title {
+    font-weight:bold;
+    font-family: "Ephesis";
+    font-size:25px;
+  }
+  
+  @font-face {
+   
+    font-family: 'Ephesis';
+  
+  
+    src: url('/assets/fonts/Ephesis-Regular.ttf');
+  
+  
+  }
+  img{
+    width: 500px; height: 200px; 
+    object-fit:cover;
+    }
+  
+  .ver {
+    text-align: right;
+    font-size:10px;
+  }
+  ion-icon {
+    font-size:17px;
+  }
+  .valor {
+    text-align: right;
+    font-weight:bold;
+  }
+  #button {
+    color: aqua;
+  }
+  .pe {
+    text-align: right;
+  }
+
