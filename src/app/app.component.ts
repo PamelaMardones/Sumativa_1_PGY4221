@@ -7,10 +7,11 @@ import { Component } from '@angular/core';
 export class AppComponent {
   public appPages = [
     { title: 'Login', url: 'login', icon: 'log-in' },
-    { title: 'Registro', url: 'register', icon: 'book' },
+    { title: 'Register', url: 'register', icon: 'book' },
     { title: 'Productos', url: 'products', icon: 'bag' },
     { title: 'Mis Compras', url: 'my-shopping', icon: 'pricetags' },
     { title: 'Carrito', url: 'cart', icon: 'cart' },
   ];
+
   constructor() {}
 }

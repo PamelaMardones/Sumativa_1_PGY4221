@@ -1,13 +1,48 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>login</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Iniciar sesión</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">login</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="animated-content">
+  <div class="ion-padding-vertical">
+    <ion-card class="ion-text-center">
+      <ion-card-title class="ion-text-center">
+        <ion-label>
+          <h1>¡Bienvenido (a) a MagicalHatsAPP! </h1>
+        </ion-label>
+      </ion-card-title>
+      <ion-card-content>
+        <ion-item>
+          <ion-label position="floating">Usuario</ion-label>
+          <ion-input type="text" [(ngModel)]="login.Usuario"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label position="floating" >Password</ion-label>
+          <ion-input type="password" [(ngModel)]="login.Password"></ion-input>
+        </ion-item>
+      </ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <ion-button shape="block" (click)="limpiar()">
+              Limpiar
+            </ion-button>
+          </ion-col>
+          <ion-col col-6>
+            <ion-button shape="block" (click)="ingresar()">
+              Enviar
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card>
+  </div>
+  <div id="container" class="ion-text-center">
+    <h1>¿No tienes cuenta?</h1>
+    <p><a target="_self" rel="noopener noreferrer" href="register" style = "color: black">Crear Cuenta</a></p>
+  </div>
 </ion-content>
