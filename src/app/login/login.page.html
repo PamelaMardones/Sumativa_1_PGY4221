@@ -24,7 +24,7 @@
       <div class="error-message" *ngIf="loginErrorMessage">{{ loginErrorMessage }}</div>
       <ion-button expand="full" class="login-button" (click)="login()">Iniciar sesión</ion-button>
       <div class="register-link">
-        ¿No tienes una cuenta? <a class="register-link-text" (click)="goToRegisterPage()">Regístrate</a>
+        ¿No tienes una cuenta? <a class="register-link-text" [routerLink]="['/register']">Regístrate</a>
       </div>
     </ion-card-content>
   </ion-card>

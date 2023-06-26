@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { AlertController } from '@ionic/angular';
+import { DatabaseService } from '../services/database.service';
 
 @Component({
   selector: 'app-login',
@@ -16,29 +17,20 @@ export class LoginPage {
   loginErrorMessage = '';
 
   constructor(
-    private authService: AuthService,
-    private alertController: AlertController,
-    private router: Router
+    private databaseService: DatabaseService,
+    private alertController: AlertController
   ) {}
 
   login() {
     const { email, password } = this.loginUser;
 
-    this.authService.login(email, password)
-      .then(() => {
-        const loggedInUser = this.authService.getLoggedInUser();
-        if (loggedInUser) {
-          this.presentWelcomeAlert(loggedInUser.email);
-        }
-      })
-      .catch(error => {
-        console.log('Error al iniciar sesión:', error);
+    this.databaseService.getUserByEmail(email).then(user => {
+      if (user && user.password === password) {
+        this.presentWelcomeAlert(user.email);
+      } else {
         this.presentLoginErrorAlert();
-      });
-  }
-
-  goToRegisterPage() {
-    this.router.navigate(['/register']); // Redireccionar a la página de registro
+      }
+    });
   }
 
   async presentWelcomeAlert(username: string) {
@@ -60,4 +52,5 @@ export class LoginPage {
 
     await alert.present();
   }
+
 }
